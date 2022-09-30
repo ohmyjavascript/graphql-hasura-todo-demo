@@ -2,12 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
-import {
-  ApolloClient,
-  InMemoryCache,
-  ApolloProvider,
-  gql,
-} from '@apollo/client';
+import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 
 // instantiate a client
 const client = new ApolloClient({
@@ -15,24 +10,9 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
   headers: {
     'content-type': 'application/json',
-    'x-hasura-admin-secret':
-      'fUmKEfiE6thXp8MrhT2r0bRVFFq5THZsB0NI7QFLaxl0xwrkRBOrgscqv7dVkz42',
+    'x-hasura-admin-secret': process.env.REACT_APP_HASURA_KEY,
   },
 });
-
-client
-  .query({
-    query: gql`
-      query getTodos {
-        todos {
-          done
-          id
-          text
-        }
-      }
-    `,
-  })
-  .then((result) => console.log(result));
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
